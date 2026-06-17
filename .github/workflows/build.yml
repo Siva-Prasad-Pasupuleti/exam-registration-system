@@ -9,7 +9,6 @@ jobs:
 
 build:
 
-```
 runs-on: ubuntu-latest
 
 steps:
@@ -31,5 +30,4 @@ steps:
     with:
       name: exam-registration-system
       path: target/exam-registration-system.war
-```
 
