@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://dev-postgres.choyusqw2vhj.eu-west-1.rds.amazonaws.com
+    username: appadmin
+    password: [!3m*yvo4MH$r$u}wmz1
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+
+    show-sql: true
+
+server:
+  port: 8080
