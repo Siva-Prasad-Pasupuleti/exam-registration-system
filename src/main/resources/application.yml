@@ -2,7 +2,7 @@ spring:
   datasource:
     url: jdbc:postgresql://dev-postgres.choyusqw2vhj.eu-west-1.rds.amazonaws.com:5432/appdb
     username: appadmin
-    password: "[!3m*yvo4MH$r$u}wmz1"
+    password: "TempPass123!"
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
