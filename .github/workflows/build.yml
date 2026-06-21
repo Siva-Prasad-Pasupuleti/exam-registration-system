@@ -10,7 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Source
         uses: actions/checkout@v4
 
@@ -32,4 +31,26 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload WAR to S3
-        run: aws s3 cp backend/target/exam-registration-system.war s3://${{ secrets.S3_BUCKET }}/exam-registration-system.war
+        run: |
+          aws s3 cp \
+            backend/target/exam-registration-system.war \
+            s3://${{ secrets.S3_BUCKET }}/exam-registration-system.war
+
+      - name: Deploy to WildFly via SSM
+        run: |
+          COMMAND_ID=$(aws ssm send-command \
+            --document-name "AWS-RunShellScript" \
+            --targets "Key=tag:Role,Values=wildfly" \
+            --parameters commands="/opt/deploy/deploy-war.sh" \
+            --region ${{ secrets.AWS_REGION }} \
+            --query "Command.CommandId" \
+            --output text)
+
+          echo "Command ID: $COMMAND_ID"
+
+          sleep 20
+
+          aws ssm list-command-invocations \
+            --command-id $COMMAND_ID \
+            --details \
+            --region ${{ secrets.AWS_REGION }}
