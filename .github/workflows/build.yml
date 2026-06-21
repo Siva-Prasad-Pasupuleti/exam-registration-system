@@ -1,6 +1,5 @@
 name: Build and Deploy
 
-
 on:
   push:
     branches:
@@ -11,6 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+
       - name: Checkout Source
         uses: actions/checkout@v4
 
@@ -20,7 +20,8 @@ jobs:
           distribution: temurin
           java-version: '17'
 
-      - name: Build Application
+      - name: Build Spring Boot Application
+        working-directory: backend
         run: mvn clean package
 
       - name: Configure AWS Credentials
@@ -31,7 +32,4 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
 
       - name: Upload WAR to S3
-        run: |
-          aws s3 cp \
-            target/exam-registration-system.war \
-            s3://${{ secrets.S3_BUCKET }}/exam-registration-system.war
+        run: aws s3 cp backend/target/exam-registration-system.war s3://${{ secrets.S3_BUCKET }}/exam-registration-system.war
