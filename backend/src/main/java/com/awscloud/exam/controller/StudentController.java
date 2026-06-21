@@ -44,3 +44,8 @@ public class StudentController {
         service.delete(id);
     }
 }
+
+@GetMapping("/health")
+public String health() {
+    return "Application Version 2";
+}
