@@ -43,9 +43,10 @@ public class StudentController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+    @GetMapping("/health")
+    public String health() {
+    	return "Application Version 2";
+    }
 }
 
-@GetMapping("/health")
-public String health() {
-    return "Application Version 2";
-}
