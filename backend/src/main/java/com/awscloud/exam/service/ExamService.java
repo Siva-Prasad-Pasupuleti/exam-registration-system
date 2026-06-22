@@ -2,6 +2,7 @@ package com.awscloud.exam.service;
 
 import com.awscloud.exam.entity.Exam;
 import com.awscloud.exam.repository.ExamRepository;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -40,6 +41,13 @@ public class ExamService {
     }
 
     public void delete(Long id) {
-        repository.deleteById(id);
+
+        try {
+            repository.deleteById(id);
+        } catch (DataIntegrityViolationException e) {
+
+            throw new RuntimeException(
+                    "Cannot delete exam because registrations or results exist");
+        }
     }
 }
